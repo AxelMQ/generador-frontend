@@ -24,16 +24,43 @@ Este proyecto es el **frontend** de una herramienta que permite generar interfac
 
 ## 📁 Estructura del Proyecto
 
-- src/ 
-- ├── app/ │ 
-- ├── components/ # Componentes visuales reutilizables 
-- │├── pages/ # Páginas principales de la app 
-- |├── services/ # Servicios para conexión con backend 
-- │ └── app.module.ts # Módulo principal 
-- ├── assets/ # Recursos estáticos (imágenes, estilos) 
-- ├── index.html # Documento principal 
-- ├── main.ts # Punto de entrada 
-- └── styles.css # Estilos globales
+src/
+├── app/
+│   ├── core/                     # Servicios globales, interceptores, utilidades
+│   │   ├── services/
+│   │   ├── interceptors/
+│   │   └── constants.ts
+│   │
+│   ├── shared/                   # Componentes, pipes y directivas reutilizables
+│   │   ├── components/
+│   │   ├── directives/
+│   │   ├── pipes/
+│   │   └── shared.module.ts
+│   │
+│   ├── features/                 # Módulos por funcionalidad (estructura escalable)
+│   │   ├── generator/            # Generador de código HTML/CSS compatible con Angular
+│   │   │   ├── components/       # Componentes visuales dentro del generador
+│   │   │   ├── pages/            # Vistas (pantallas) relacionadas al generador
+│   │   │   ├── services/         # Servicios de comunicación con el backend
+│   │   │   └── generator.module.ts
+│   │   │
+│   │   ├── projects/             # Gestión de proyectos (crear, editar, listar)
+│   │   │   ├── components/
+│   │   │   ├── pages/
+│   │   │   ├── services/
+│   │   │   └── projects.module.ts
+│   │   │
+│   │   └── auth/                 # (Opcional) Autenticación y registro de usuarios
+│   │
+│   ├── app-routing.module.ts     # Rutas globales de la aplicación
+│   └── app.module.ts             # Módulo raíz del proyecto
+│
+├── assets/                       # Imágenes, íconos, fuentes u otros recursos estáticos
+├── environments/                 # Variables de entorno (dev/prod)
+├── index.html                    # Documento HTML principal
+├── main.ts                       # Punto de entrada de la app Angular
+└── styles.css                    # Estilos globales de la aplicación
+
 
 
 ---
