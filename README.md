@@ -1,59 +1,63 @@
-# GeneradorFrontend
+# 🎨 Generador de Frontend - Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
+Este proyecto es el **frontend** de una herramienta que permite generar interfaces web automáticamente a partir de componentes clásicos como botones, inputs, textos, etc. Está desarrollado con **Angular** y diseñado para ser compatible con HTML, CSS y Angular Components.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 ¿Qué hace este proyecto?
 
-```bash
+- Permite definir visualmente una interfaz con componentes web.
+- Envía esa definición al backend para generar el código HTML, CSS y un componente Angular.
+- Visualiza el código generado directamente en pantalla.
+- (Próximamente) Permitir descargar o importar el componente en otros proyectos Angular.
+
+---
+
+## 🧱 Tecnologías usadas
+
+- ⚙️ Angular CLI 19.2.7
+- 🌐 HTML & CSS
+- 📦 TypeScript
+- 🔁 Comunicación con Backend REST usando `HttpClient`
+
+---
+
+## 📁 Estructura del Proyecto
+
+- src/ 
+- ├── app/ │ 
+- ├── components/ # Componentes visuales reutilizables 
+- │├── pages/ # Páginas principales de la app 
+- |├── services/ # Servicios para conexión con backend 
+- │ └── app.module.ts # Módulo principal 
+- ├── assets/ # Recursos estáticos (imágenes, estilos) 
+- ├── index.html # Documento principal 
+- ├── main.ts # Punto de entrada 
+- └── styles.css # Estilos globales
+
+
+---
+
+## ⚙️ Scripts útiles
+
+### Iniciar servidor local
+
+bash
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+##  📌 Estado del proyecto
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- ✅ Estructura Angular generada
+- ✅ Interfaz visual inicial
+- 🚧 Conexión funcional con backend
+- 🚧 Render dinámico de código generado
+- 🧠 Posible integración con bocetos/imágenes (Plus)
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+##  🧑‍💻 Autor
+- Axel Alexander Mamani Quispia
+- 📍 Santa Cruz, Bolivia
+- 🎓 Estudiante de Ingeniería Informática - UAGRM
