@@ -1,0 +1,35 @@
+<div class="generator-container">
+    <!-- Panel Izquierdo: Componentes -->
+    <aside class="panel left-panel" role="region" aria-label="Componentes disponibles">
+      <h3>Componentes</h3>
+        <div class="component-item" 
+        draggable="true" 
+        (dragstart)="onDragStart($event, 'Boton')">Botón</div>
+ 
+        <div class="component-item" 
+            draggable="true" 
+            (dragstart)="onDragStart($event, 'Input')">Input</div>
+        
+        <div class="component-item" 
+            draggable="true" 
+            (dragstart)="onDragStart($event, 'Titulo')">Título</div>
+        
+    </aside>
+  
+    <!-- Área Central: Canvas -->
+    <main class="canvas" (drop)="onDrop($event)" (dragover)="onDragOver($event)" role="region" aria-label="Área de diseño">
+      <h4>Área de diseño</h4>
+      <div class="design-area">
+        <ng-container *ngFor="let element of droppedElements">
+          <div class="dropped-element" [innerHTML]="element.html"></div>
+        </ng-container>
+      </div>
+    </main>
+  
+    <!-- Panel Derecho: Código generado -->
+    <aside class="panel right-panel" role="region" aria-label="Código generado">
+      <h3>Código generado</h3>
+      <pre><code>{{ generatedCode }}</code></pre>
+    </aside>
+  </div>
+  

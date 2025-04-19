@@ -1,0 +1,66 @@
+/* Estilos generales del contenedor principal */
+.generator-container {
+    display: flex;
+    height: 100vh;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #f5f5f5;
+  }
+  
+  /* Estilos para los paneles laterales y central */
+  .panel {
+    flex: 1;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .canvas {
+    flex: 2;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Área de diseño (donde se colocan los componentes) */
+  .design-area {
+    flex-grow: 1;
+    border: 2px dashed #ccc;
+    padding: 1rem;
+    margin-top: 1rem;
+    min-height: 200px;
+    background-color: #fafafa;
+  }
+  
+  /* Componentes arrastrables */
+  .component-item {
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    background-color: #e3f2fd;
+    border: 1px solid #bbdefb;
+    border-radius: 4px;
+    cursor: grab;
+    user-select: none;
+  }
+  
+  .component-item:active {
+    cursor: grabbing;
+    opacity: 0.8;
+  }
+  
+  /* Código generado */
+  pre {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+  
+  h3, h4 {
+    color: #333;
+    margin-top: 0;
+  }
