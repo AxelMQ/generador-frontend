@@ -1,66 +1,169 @@
-/* Estilos generales del contenedor principal */
+/* Contenedor principal */
 .generator-container {
-    display: flex;
-    height: 100vh;
-    gap: 1rem;
-    padding: 1rem;
-    background-color: #f5f5f5;
-  }
-  
-  /* Estilos para los paneles laterales y central */
-  .panel {
-    flex: 1;
-    padding: 1rem;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .canvas {
-    flex: 2;
-    padding: 1rem;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Área de diseño (donde se colocan los componentes) */
-  .design-area {
-    flex-grow: 1;
-    border: 2px dashed #ccc;
-    padding: 1rem;
-    margin-top: 1rem;
-    min-height: 200px;
-    background-color: #fafafa;
-  }
-  
-  /* Componentes arrastrables */
-  .component-item {
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-    background-color: #e3f2fd;
-    border: 1px solid #bbdefb;
-    border-radius: 4px;
-    cursor: grab;
-    user-select: none;
-  }
-  
-  .component-item:active {
-    cursor: grabbing;
-    opacity: 0.8;
-  }
-  
-  /* Código generado */
-  pre {
-    background-color: #f5f5f5;
-    padding: 1rem;
-    border-radius: 4px;
-    overflow-x: auto;
-  }
-  
-  h3, h4 {
-    color: #333;
-    margin-top: 0;
-  }
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  gap: 1rem;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+/* Panel lateral izquierdo y derecho */
+.panel {
+  flex: 1;
+  padding: 1rem;
+  background-color: #f4f4f4;
+  border-right: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+/* Área principal del canvas */
+main.canvas {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Área de diseño donde se colocan los elementos */
+.design-area {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  margin-top: 1rem;
+  min-height: 200px;
+  background-color: #fafafa;
+  border: 2px dashed #ccc;
+  overflow-y: auto;
+}
+
+/* Elementos arrastrados */
+.dropped-element {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  cursor: grab;
+  transition: box-shadow 0.2s ease;
+}
+
+.dropped-element:active {
+  cursor: grabbing;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Botón eliminar dentro del componente */
+.delete-btn {
+  align-self: flex-end;
+  padding: 0.3rem 0.6rem;
+  background-color: #ff5252;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #e53935;
+}
+
+/* Estilos del panel de edición */
+.edit-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.edit-panel input[type="text"] {
+  padding: 0.5rem;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+.edit-panel input[type="text"]:focus {
+  border-color: #2196f3;
+  outline: none;
+}
+
+/* Componentes arrastrables */
+.component-item {
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  background-color: #e3f2fd;
+  border: 1px solid #bbdefb;
+  border-radius: 4px;
+  cursor: grab;
+  user-select: none;
+}
+
+.component-item:active {
+  cursor: grabbing;
+  opacity: 0.8;
+}
+
+/* Estilos visuales de los componentes */
+.component {
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+  display: block;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+/* Visual en el canvas */
+button.component {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: default;
+}
+
+input.component {
+  border: 1px solid #aaa;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  width: 100%;
+}
+
+h1.component {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+/* Código generado */
+pre {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+/* Títulos */
+h3, h4 {
+  color: #333;
+  margin-top: 0;
+}

@@ -1,21 +1,31 @@
 import { Component, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
+type ComponentProps = {
+  text?: string;
+  placeholder?: string;
+};
+
+type DroppedElement = {
+  id: string;
+  type: 'Boton' | 'Input' | 'Titulo';
+  props: ComponentProps;
+};
 
 @Component({
   selector: 'app-generator-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, DragDropModule],
   templateUrl: './generator-page.component.html',
   styleUrls: ['./generator-page.component.css'],
 })
-
 export class GeneratorPageComponent {
-  private sanitizer = inject(DomSanitizer); 
+  private sanitizer = inject(DomSanitizer);
 
-  // Tipado fuerte para droppedElements
-  droppedElements: Array<{ type: 'Boton' | 'Input' | 'Titulo'; html: String }> = [];
-
+  droppedElements: DroppedElement[] = [];
   generatedCode: string = '';
 
   onDragOver(event: DragEvent) {
@@ -24,31 +34,61 @@ export class GeneratorPageComponent {
 
   onDrop(event: DragEvent) {
     event.preventDefault();
-    const type = event.dataTransfer?.getData('component-type');
+    const type = event.dataTransfer?.getData('component-type') as DroppedElement['type'];
 
-    if (type === 'Boton' || type === 'Input' || type === 'Titulo' ) {
-      const html = this.getHtmlFromType(type);
-      this.droppedElements.push({ type, html });
+    if (type) {
+      const newElement: DroppedElement = {
+        id: crypto.randomUUID(), // identificador único
+        type,
+        props: this.getDefaultProps(type),
+      };
+      this.droppedElements.push(newElement);
       this.updateGeneratedCode();
     }
   }
 
-  // Retorna HTML como string 
-  private getHtmlFromType(type: 'Boton' | 'Input' | 'Titulo'): string {
-    const components = {
-      'Boton': '<button class= "component">Click aqui</button>',
-      'Input': '<input class="component" placeholder="Texto aqui" />',
-      'Titulo': '<h1 class="component">Titulo</h1>'
+  private getDefaultProps(type: DroppedElement['type']): ComponentProps {
+    switch (type) {
+      case 'Boton':
+        return { text: 'Click aquí' };
+      case 'Input':
+        return { placeholder: 'Texto aquí' };
+      case 'Titulo':
+        return { text: 'Título' };
+      default:
+        return {};
     }
-    return components[type] || '';
   }
 
-  private updateGeneratedCode() {
-    this.generatedCode = this.droppedElements.map(el => el.html.toString()).join('\n');
+  updateGeneratedCode() {
+    this.generatedCode = this.droppedElements.map(el => this.generateHtml(el)).join('\n');
+  }
+
+  removeElement(id: string) {
+    this.droppedElements = this.droppedElements.filter(el => el.id !== id);
+    this.updateGeneratedCode();
   }
   
+  dropElement(event: CdkDragDrop<DroppedElement[]>) {
+    moveItemInArray(this.droppedElements, event.previousIndex, event.currentIndex);
+    this.updateGeneratedCode();
+  }
+
+  public generateHtml(el: DroppedElement): string {
+    const { type, props } = el;
+    switch (type) {
+      case 'Boton':
+        return `<button class="component">${props.text}</button>`;
+      case 'Input':
+        return `<input class="component" placeholder="${props.placeholder}" />`;
+      case 'Titulo':
+        return `<h1 class="component">${props.text}</h1>`;
+      default:
+        return '';
+    }
+  }
+
   onDragStart(event: DragEvent, type: 'Boton' | 'Input' | 'Titulo') {
     event.dataTransfer?.setData('component-type', type);
   }
-  
 }

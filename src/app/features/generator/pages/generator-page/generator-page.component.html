@@ -19,11 +19,50 @@
     <!-- Área Central: Canvas -->
     <main class="canvas" (drop)="onDrop($event)" (dragover)="onDragOver($event)" role="region" aria-label="Área de diseño">
       <h4>Área de diseño</h4>
-      <div class="design-area">
-        <ng-container *ngFor="let element of droppedElements">
-          <div class="dropped-element" [innerHTML]="element.html"></div>
+      <div class="design-area" cdkDropList (cdkDropListDropped)="dropElement($event)">
+        <ng-container *ngFor="let element of droppedElements; let i = index">
+          <div class="dropped-element" cdkDrag [cdkDragData]="element">
+            <!-- Mostrar los elementos según su tipo -->
+            <ng-container [ngSwitch]="element.type">
+              <!-- Botón editable -->
+              <div *ngSwitchCase="'Boton'" class="edit-panel">
+                <button class="component">{{ element.props.text }}</button>
+                <input
+                  type="text"
+                  [(ngModel)]="element.props.text"
+                  (input)="updateGeneratedCode()"
+                  placeholder="Texto del botón"
+                />
+              </div>
+      
+              <!-- Input editable -->
+              <div *ngSwitchCase="'Input'"  class="edit-panel">
+                <input class="component" [placeholder]="element.props.placeholder" />
+                <input
+                  type="text"
+                  [(ngModel)]="element.props.placeholder"
+                  (input)="updateGeneratedCode()"
+                  placeholder="Placeholder del input"
+                />
+              </div>
+      
+              <!-- Título editable -->
+              <div *ngSwitchCase="'Titulo'" class="edit-panel">
+                <h1 class="component">{{ element.props.text }}</h1>
+                <input
+                  type="text"
+                  [(ngModel)]="element.props.text"
+                  (input)="updateGeneratedCode()"
+                  placeholder="Texto del título"
+                />
+              </div>
+            </ng-container>
+
+            <!-- Botón para eliminar el componente -->
+            <button class="delete-btn" (click)="removeElement(element.id)">🗑️ Eliminar</button>
+          </div>
         </ng-container>
-      </div>
+      </div>      
     </main>
   
     <!-- Panel Derecho: Código generado -->
