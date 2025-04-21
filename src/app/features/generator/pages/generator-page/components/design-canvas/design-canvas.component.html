@@ -1,0 +1,110 @@
+<div class="design-area" 
+     cdkDropList
+     (cdkDropListDropped)="onDrop($event)"
+     [cdkDropListData]="droppedElements">
+     
+  <!-- Overlay para el panel de edición -->
+  <div *ngIf="showOverlay" class="edit-panel-overlay"></div>
+     
+  <div *ngFor="let element of droppedElements" 
+       cdkDrag
+       [cdkDragData]="element"
+       class="dropped-element"
+       [class.selected]="selectedElement?.id === element.id"
+       (click)="selectElement(element, $event)">
+       
+    <!-- Controles del elemento -->
+    <div class="element-controls">
+      <button class="control-btn edit-btn" 
+              (click)="editElement(element, $event)">
+        ✏️
+      </button>
+      <button class="control-btn delete-btn" 
+              (click)="removeElement(element.id, $event)">
+        ×
+      </button>
+    </div>
+
+    <!-- Visualización del componente -->
+    <div class="component-preview">
+      <ng-container [ngSwitch]="element.type">
+        <button *ngSwitchCase="'Boton'" 
+                class="component"
+                [style.background]="element.props.color === 'primary' ? '#4361ee' : 
+                                  element.props.color === 'secondary' ? '#6c757d' : 
+                                  '#ef233c'">
+          {{element.props.text}}
+        </button>
+        
+        <input *ngSwitchCase="'Input'" 
+               class="component" 
+               [placeholder]="element.props.placeholder" 
+               [type]="element.props.type"
+               readonly>
+               
+        <h1 *ngSwitchCase="'Titulo'" 
+            class="component" 
+            [style.fontSize]="element.props.level === '1' ? '2rem' : 
+                            element.props.level === '2' ? '1.5rem' : '1.25rem'">
+          {{element.props.text}}
+        </h1>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Panel de edición flotante -->
+  <div *ngIf="selectedElement && editPanelVisible" class="edit-panel-container">
+    <div class="edit-panel-header">
+      <h3>Editar {{getComponentName(selectedElement.type)}}</h3>
+      <button class="close-btn" (click)="closeEditPanel()">×</button>
+    </div>
+    
+    <div class="edit-panel-body">
+      <ng-container [ngSwitch]="selectedElement.type">
+        <!-- Editor para Botón -->
+        <div *ngSwitchCase="'Boton'" class="form-group">
+          <label>Texto:</label>
+          <input type="text" [(ngModel)]="selectedElement.props.text" class="form-control" (input)="onPropChange()">
+          
+          <label>Color:</label>
+          <select [(ngModel)]="selectedElement.props.color" class="form-control" (change)="onPropChange()">
+            <option *ngFor="let color of buttonColors" [value]="color.value">
+              {{color.name}}
+            </option>
+          </select>
+        </div>
+        
+        <!-- Editor para Input -->
+        <div *ngSwitchCase="'Input'" class="form-group">
+          <label>Placeholder:</label>
+          <input type="text" [(ngModel)]="selectedElement.props.placeholder" class="form-control" (input)="onPropChange()">
+          
+          <label>Tipo:</label>
+          <select [(ngModel)]="selectedElement.props.type" class="form-control" (change)="onPropChange()">
+            <option value="text">Texto</option>
+            <option value="number">Número</option>
+            <option value="email">Email</option>
+            <option value="password">Contraseña</option>
+          </select>
+        </div>
+        
+        <!-- Editor para Título -->
+        <div *ngSwitchCase="'Titulo'" class="form-group">
+          <label>Texto:</label>
+          <input type="text" [(ngModel)]="selectedElement.props.text" class="form-control" (input)="onPropChange()">
+          
+          <label>Nivel:</label>
+          <select [(ngModel)]="selectedElement.props.level" class="form-control" (change)="onPropChange()">
+            <option value="1">H1 (Título principal - 2rem)</option>
+            <option value="2">H2 (Subtítulo - 1.5rem)</option>
+            <option value="3">H3 (Sección - 1.25rem)</option>
+          </select>
+        </div>
+      </ng-container>
+    </div>
+    
+    <div class="edit-panel-footer">
+      <button (click)="closeEditPanel()" class="btn btn-primary">Aplicar Cambios</button>
+    </div>
+  </div>
+</div>

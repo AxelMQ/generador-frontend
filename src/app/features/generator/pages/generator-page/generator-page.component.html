@@ -1,74 +1,50 @@
 <div class="generator-container">
-    <!-- Panel Izquierdo: Componentes -->
+  <!-- Botón generar -->
+  <button (click)="onGenerateAll()" class="generate-btn">
+    ⚡ Generar Componente Angular
+  </button>
+
+  <!-- Contenedor principal de diseño -->
+  <div class="workspace" cdkDropListGroup>
+    <!-- Panel Izquierdo -->
     <aside class="panel left-panel" role="region" aria-label="Componentes disponibles">
       <h3>Componentes</h3>
-        <div class="component-item" 
-        draggable="true" 
-        (dragstart)="onDragStart($event, 'Boton')">Botón</div>
- 
-        <div class="component-item" 
-            draggable="true" 
-            (dragstart)="onDragStart($event, 'Input')">Input</div>
-        
-        <div class="component-item" 
-            draggable="true" 
-            (dragstart)="onDragStart($event, 'Titulo')">Título</div>
-        
+      <div 
+        cdkDropList
+        [cdkDropListData]="availableComponents"
+        cdkDropListSortingDisabled
+        class="components-list">
+        <div 
+          *ngFor="let component of availableComponents" 
+          cdkDrag
+          [cdkDragData]="component"
+          class="component-item">
+          <div class="drag-handle">≡</div>
+          {{component.label}}
+        </div>
+      </div>
     </aside>
-  
-    <!-- Área Central: Canvas -->
-    <main class="canvas" (drop)="onDrop($event)" (dragover)="onDragOver($event)" role="region" aria-label="Área de diseño">
-      <h4>Área de diseño</h4>
-      <div class="design-area" cdkDropList (cdkDropListDropped)="dropElement($event)">
-        <ng-container *ngFor="let element of droppedElements; let i = index">
-          <div class="dropped-element" cdkDrag [cdkDragData]="element">
-            <!-- Mostrar los elementos según su tipo -->
-            <ng-container [ngSwitch]="element.type">
-              <!-- Botón editable -->
-              <div *ngSwitchCase="'Boton'" class="edit-panel">
-                <button class="component">{{ element.props.text }}</button>
-                <input
-                  type="text"
-                  [(ngModel)]="element.props.text"
-                  (input)="updateGeneratedCode()"
-                  placeholder="Texto del botón"
-                />
-              </div>
-      
-              <!-- Input editable -->
-              <div *ngSwitchCase="'Input'"  class="edit-panel">
-                <input class="component" [placeholder]="element.props.placeholder" />
-                <input
-                  type="text"
-                  [(ngModel)]="element.props.placeholder"
-                  (input)="updateGeneratedCode()"
-                  placeholder="Placeholder del input"
-                />
-              </div>
-      
-              <!-- Título editable -->
-              <div *ngSwitchCase="'Titulo'" class="edit-panel">
-                <h1 class="component">{{ element.props.text }}</h1>
-                <input
-                  type="text"
-                  [(ngModel)]="element.props.text"
-                  (input)="updateGeneratedCode()"
-                  placeholder="Texto del título"
-                />
-              </div>
-            </ng-container>
 
-            <!-- Botón para eliminar el componente -->
-            <button class="delete-btn" (click)="removeElement(element.id)">🗑️ Eliminar</button>
-          </div>
-        </ng-container>
-      </div>      
+    <!-- Área de diseño -->
+    <main 
+      class="canvas" 
+      role="region" 
+      aria-label="Área de diseño"
+      cdkDropList
+      (cdkDropListDropped)="onDrop($event)"
+      [cdkDropListData]="droppedElements">
+      <h4>Área de diseño</h4>
+      <app-design-canvas
+        [droppedElements]="droppedElements"
+        (elementRemoved)="removeElement($event)">
+      </app-design-canvas>
     </main>
-  
-    <!-- Panel Derecho: Código generado -->
-    <aside class="panel right-panel" role="region" aria-label="Código generado">
-      <h3>Código generado</h3>
-      <pre><code>{{ generatedCode }}</code></pre>
-    </aside>
   </div>
-  
+
+  <!-- Vista del código generado -->
+  <app-code-preview
+    [generatedHtml]="fullGeneratedCode?.html || ''"
+    [generatedCss]="fullGeneratedCode?.css || ''"
+    [generatedTs]="fullGeneratedCode?.ts || ''">
+  </app-code-preview>
+</div>

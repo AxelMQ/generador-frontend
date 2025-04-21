@@ -1,0 +1,221 @@
+/* Variables CSS actualizadas con mejor contraste */
+:root {
+  --primary-color: #3a56d4;
+  --primary-light: #e0e7ff;
+  --primary-dark: #2c4299;
+  --secondary-color: #5a6268;
+  --danger-color: #d11a2a;
+  --success-color: #28a745;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --border-color: #adb5bd;
+  --text-color: #212529;
+  --text-muted: #6c757d;
+  --background-color: #ffffff;
+  --surface-color: #f8f9fa;
+  --border-radius: 0.5rem;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --transition: all 0.2s ease;
+}
+
+/* Área principal de diseño con mejor contraste */
+.design-area {
+  position: relative;
+  min-height: 400px;
+  padding: 1.5rem;
+  border: 2px dashed var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--surface-color);
+  background-image: 
+    linear-gradient(45deg, #e9ecef 25%, transparent 25%),
+    linear-gradient(-45deg, #e9ecef 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e9ecef 75%),
+    linear-gradient(-45deg, transparent 75%, #e9ecef 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  transition: var(--transition);
+  overflow: auto;
+}
+
+/* Elementos arrastrables con mejor visibilidad */
+.dropped-element {
+  position: relative;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  cursor: grab;
+  transition: var(--transition);
+  z-index: 1;
+}
+
+.dropped-element.selected {
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 0 0 4px var(--primary-light);
+  background-color: var(--primary-light);
+}
+
+.dropped-element:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Componentes internos con mejor contraste */
+.component {
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button.component {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+input.component {
+  background-color: white;
+}
+
+h1.component {
+  margin: 0;
+  color: var(--dark-color);
+}
+
+/* Controles más visibles */
+.element-controls {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.control-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  padding: 0;
+  transition: var(--transition);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.delete-btn {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.edit-btn {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.control-btn:hover {
+  transform: scale(1.15);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Panel de edición más destacado */
+.edit-panel-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 380px;
+  max-width: 90%;
+  background: var(--background-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  border: 1px solid var(--border-color);
+}
+
+.edit-panel-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.edit-panel-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Campos de formulario más claros */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--dark-color);
+  font-size: 0.95rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  transition: var(--transition);
+  font-size: 1rem;
+  background-color: white;
+  color: var(--text-color);
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Overlay más oscuro */
+.edit-panel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+
+/* Mejoras responsive */
+@media (max-width: 768px) {
+  .design-area {
+    min-height: 300px;
+    padding: 1rem;
+  }
+  
+  .dropped-element {
+    padding: 1rem;
+  }
+  
+  .component {
+    padding: 0.6rem 1rem;
+  }
+  
+  .control-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+}

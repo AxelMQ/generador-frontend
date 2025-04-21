@@ -1,0 +1,62 @@
+<div class="code-preview-container">
+  <div class="preview-header">
+    <h3>Vista Previa del Código</h3>
+    
+    <div class="tabs">
+      <button 
+        [class.active]="activeTab === 'html'"
+        (click)="selectTab('html')">
+        HTML
+      </button>
+      <button 
+        [class.active]="activeTab === 'css'"
+        (click)="selectTab('css')">
+        CSS
+      </button>
+      <button 
+        [class.active]="activeTab === 'ts'"
+        (click)="selectTab('ts')">
+        TypeScript
+      </button>
+    </div>
+  </div>
+
+  <div class="code-section" *ngIf="activeTab === 'html'">
+    <div class="code-header">
+      <h4>HTML</h4>
+      <button 
+        class="copy-btn"
+        (click)="copyToClipboard(generatedHtml, 'html')"
+        [class.success]="copySuccess['html']">
+        {{ copySuccess['html'] ? '✓ Copiado!' : 'Copiar' }}
+      </button>
+    </div>
+    <pre><code class="language-html">{{ generatedHtml }}</code></pre>
+  </div>
+
+  <div class="code-section" *ngIf="activeTab === 'css'">
+    <div class="code-header">
+      <h4>CSS</h4>
+      <button 
+        class="copy-btn"
+        (click)="copyToClipboard(generatedCss, 'css')"
+        [class.success]="copySuccess['css']">
+        {{ copySuccess['css'] ? '✓ Copiado!' : 'Copiar' }}
+      </button>
+    </div>
+    <pre><code class="language-css">{{ generatedCss }}</code></pre>
+  </div>
+
+  <div class="code-section" *ngIf="activeTab === 'ts'">
+    <div class="code-header">
+      <h4>TypeScript</h4>
+      <button 
+        class="copy-btn"
+        (click)="copyToClipboard(generatedTs, 'ts')"
+        [class.success]="copySuccess['ts']">
+        {{ copySuccess['ts'] ? '✓ Copiado!' : 'Copiar' }}
+      </button>
+    </div>
+    <pre><code class="language-typescript">{{ generatedTs }}</code></pre>
+  </div>
+</div>

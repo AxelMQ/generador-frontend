@@ -1,0 +1,13 @@
+<aside class="panel left-panel" role="region" aria-label="Componentes disponibles">
+  <h3 class="panel-title">Componentes</h3>
+  <div class="components-list">
+    <div *ngFor="let component of components" 
+         class="component-item" 
+         cdkDrag
+         [cdkDragData]="component.type"
+         (cdkDragStarted)="onDragStarted(component.type)">
+      <span class="component-icon">{{component.icon}}</span>
+      <span class="component-label">{{component.label}}</span>
+    </div>
+  </div>
+</aside>

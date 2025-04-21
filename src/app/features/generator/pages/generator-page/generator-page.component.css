@@ -1,169 +1,235 @@
-/* Contenedor principal */
+:root {
+  --primary: #4361ee;
+  --primary-hover: #3a56d4;
+  --secondary: #6c757d;
+  --light: #f8f9fa;
+  --lighter: #ffffff;
+  --dark: #212529;
+  --border: #e0e0e0;
+  --border-dark: #ced4da;
+  --danger: #ef233c;
+  --success: #4cc9f0;
+  --spacing: 1rem;
+  --spacing-sm: 0.75rem;
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .generator-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 100vh;
-  gap: 1rem;
-  padding: 1rem;
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  padding: var(--spacing);
+  gap: var(--spacing);
+  background-color: #f5f7fa;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Panel lateral izquierdo y derecho */
-.panel {
-  flex: 1;
-  padding: 1rem;
-  background-color: #f4f4f4;
-  border-right: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-}
-
-/* Área principal del canvas */
-main.canvas {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  padding: 1rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Área de diseño donde se colocan los elementos */
-.design-area {
-  flex-grow: 1;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  margin-top: 1rem;
-  min-height: 200px;
-  background-color: #fafafa;
-  border: 2px dashed #ccc;
-  overflow-y: auto;
-}
-
-/* Elementos arrastrados */
-.dropped-element {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
-  margin: 0.5rem 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  cursor: grab;
-  transition: box-shadow 0.2s ease;
-}
-
-.dropped-element:active {
-  cursor: grabbing;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Botón eliminar dentro del componente */
-.delete-btn {
+/* Botón principal */
+.generate-btn {
   align-self: flex-end;
-  padding: 0.3rem 0.6rem;
-  background-color: #ff5252;
-  color: white;
+  padding: var(--spacing-sm) var(--spacing);
+  background-color: var(--primary);
+  color: var(--lighter);
   border: none;
-  border-radius: 4px;
-  font-size: 0.8rem;
+  border-radius: var(--radius);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.delete-btn:hover {
-  background-color: #e53935;
+.generate-btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
-/* Estilos del panel de edición */
-.edit-panel {
+.generate-btn:active {
+  transform: translateY(0);
+}
+
+/* Área de trabajo principal */
+.workspace {
+  display: flex;
+  flex: 1;
+  gap: var(--spacing);
+  min-height: 0;
+  overflow: hidden;
+  background-color: var(--lighter);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Panel izquierdo */
+.panel.left-panel {
+  width: 280px;
+  background-color: var(--lighter);
+  padding: var(--spacing);
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  overflow-y: auto;
 }
 
-.edit-panel input[type="text"] {
-  padding: 0.5rem;
-  border: 1px solid #bbb;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  transition: border-color 0.3s ease;
+.panel.left-panel h3 {
+  color: var(--dark);
+  margin: 0 0 var(--spacing-sm) 0;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border);
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
-.edit-panel input[type="text"]:focus {
-  border-color: #2196f3;
-  outline: none;
+.components-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
 }
 
-/* Componentes arrastrables */
 .component-item {
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  background-color: #e3f2fd;
-  border: 1px solid #bbdefb;
-  border-radius: 4px;
+  padding: var(--spacing-sm);
+  background-color: var(--light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   cursor: grab;
-  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.component-item:hover {
+  background-color: #ebeff5;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
 }
 
 .component-item:active {
   cursor: grabbing;
-  opacity: 0.8;
+  transform: translateY(0);
 }
 
-/* Estilos visuales de los componentes */
-.component {
+.drag-handle {
+  color: var(--secondary);
   font-size: 1.2rem;
-  margin-bottom: 0.3rem;
-  display: block;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-family: inherit;
+  opacity: 0.7;
+  cursor: grab;
 }
 
-/* Visual en el canvas */
-button.component {
-  background-color: #2196f3;
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: default;
+/* Área del canvas */
+.canvas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--lighter);
+  overflow: hidden;
 }
 
-input.component {
-  border: 1px solid #aaa;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border-radius: 4px;
-  width: 100%;
-}
-
-h1.component {
+.canvas h4 {
+  padding: var(--spacing-sm) var(--spacing);
   margin: 0;
-  font-size: 1.4rem;
+  background-color: var(--light);
+  border-bottom: 1px solid var(--border);
+  color: var(--dark);
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
-/* Código generado */
-pre {
-  background-color: #f5f5f5;
-  padding: 1rem;
-  border-radius: 4px;
-  overflow-x: auto;
+app-design-canvas {
+  flex: 1;
+  padding: var(--spacing);
+  overflow: auto;
+  background-color: #f9fafb;
 }
 
-/* Títulos */
-h3, h4 {
-  color: #333;
-  margin-top: 0;
+/* Preview del código */
+app-code-preview {
+  width: 100%;
+  max-height: 30vh;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  background-color: var(--lighter);
+  border: 1px solid var(--border);
+}
+
+/* Estilos para el drag and drop */
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--lighter);
+  opacity: 0.9;
+  transform: rotate(2deg);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.3;
+  background: var(--primary);
+  border: 2px dashed var(--primary);
+  border-radius: var(--radius);
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .workspace {
+    flex-direction: column;
+  }
+  
+  .panel.left-panel {
+    width: 100%;
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .components-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .component-item {
+    flex: 1 0 calc(33% - 0.5rem);
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .generator-container {
+    padding: var(--spacing-sm);
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .component-item {
+    flex: 1 0 calc(50% - 0.5rem);
+  }
+}
+
+@media (max-width: 576px) {
+  .component-item {
+    flex: 1 0 100%;
+  }
+  
+  .generate-btn {
+    width: 100%;
+  }
+  
+  app-code-preview {
+    max-height: 40vh;
+  }
 }
